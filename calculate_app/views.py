@@ -15,6 +15,8 @@ def request_handler_calculate(request):
         
 
         geolocator = Nominatim(user_agent="calculate_app")
+        # ip2 = get_ip_address(request)
+        # print(ip2)
         ip = "103.139.234.0" #Dhaka Bangladesh
         country,city,latitude,longitude = get_info(ip)
         origin = (latitude,longitude)
@@ -44,3 +46,14 @@ def get_info(ip):
     city = g.city(ip)
     latitude,longitude = g.lat_lon(ip)
     return country,city,latitude,longitude
+
+# AUTOMATIC HOST IP DETECTION > LINE NUMBER 18, 19
+# credit yanchenko
+# https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django
+def get_ip_address(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
