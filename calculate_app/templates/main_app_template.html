@@ -8,6 +8,18 @@
 
 {% block content %}
     
-    
+{% if data %}
+
+<div class="container-fluid text-sm-center p-5 bg-light"> <!-- bg-light is background color & p-5 is padding -->
+    <h1 class="display-2"><strong>{{data.0}}</strong> km</h1>
+    <p class="lead">Distance between {{data.1}} and {{data.2}}</p>
+</div>
+{% else %}
+<div class="container-fluid text-sm-center p-5 bg-light"> <!-- bg-light is background color & p-5 is padding -->
+    <h1 class="display-2"><strong>00.00 km</strong> </h1>
+    <p class="lead">Ready to calculate distance !!</p>
+</div>
+
+{% endif %}
 
 {% endblock  %}
