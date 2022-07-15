@@ -5,7 +5,7 @@ from geopy import distance as d
 from geopy.geocoders import Nominatim
 
 from .forms import DestinationFieldForm
-from .models import DistanceCalculateModel
+
 
 
 def request_handler_calculate(request):
@@ -23,19 +23,14 @@ def request_handler_calculate(request):
         # print(city['city'])
 
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.location = city['city']
+            
+            location = city['city']
             destination_data_fieldform = form.cleaned_data.get('destination')
             destination_details = geolocator.geocode(destination_data_fieldform)
-            instance.destination = destination_details
             destination_co_ordinates = (destination_details.latitude,destination_details.longitude)
-            instance.distance = d.distance(origin, destination_co_ordinates).km
-           
-            instance.save()
+            distance = d.distance(origin, destination_co_ordinates).km
 
-        
-
-        return render(request, 'main_app_template.html',{'data': [str(round(instance.distance,2)),city['city'],destination_data_fieldform]})
+        return render(request, 'main_app_template.html',{'data': [str(round(distance,2)),city['city'],destination_data_fieldform]})
 
 
     else:
